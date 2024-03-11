@@ -2,7 +2,11 @@ package Trainingjavaspring.boot.product.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+
+import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table( name = " product")
@@ -11,6 +15,10 @@ public class ProductEntity {
     private String id;
     private String name;
     private double price;
+    @PrePersist
+    public void init() {
+        this.id = Objects.isNull(this.id) ? UUID.randomUUID().toString() : this.id;
+    }
 
     public ProductEntity() {
     }
